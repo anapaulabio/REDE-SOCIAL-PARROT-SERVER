@@ -4,15 +4,25 @@
 
 $ npm install
 
-$ npm install --save-dev sequelize-cli
+- Crie e ajuste o arquivo .env a partir do .env.example
 
-- Criar e ajustar o arquivo .env a partir do .env.example
+Gere o build:
+$npx tsc
 
-Criar banco de dados automaticamente:
+Crie banco de dados automaticamente:
 $ npx sequelize db:create
 
-Criar migrations
+apague o arquivo migrate dist/infrastructure/persistence/misql/migrations/posts.migration.ts
+
+Crie a primeira migration:
 $ npx sequelize-cli db:migrate
+
+Gere o build novamente:
+$npx tsc
+
+Crie a segunda migration
+$ npx sequelize-cli db:migrate
+
 
 
 ```

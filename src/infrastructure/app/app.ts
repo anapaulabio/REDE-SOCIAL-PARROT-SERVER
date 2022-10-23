@@ -6,6 +6,7 @@ import * as expressWinston from 'express-winston';
 import cors from 'cors';
 import { debug } from 'debug';
 import { CommonRoutesConfig } from '../../adapter/apis/routes/common.routes.config';
+import { UsersRoutes } from '../../adapter/apis/routes/users.routes';
 
 
 
@@ -34,7 +35,7 @@ if(!process.env.DEBUG) {
 
 app.use(expressWinston.logger(loggerOptions));
 
-//routes.push();
+routes.push(new UsersRoutes(app));
 
 
 const runningMessage = `Servidor rodando na porta ${port}`;

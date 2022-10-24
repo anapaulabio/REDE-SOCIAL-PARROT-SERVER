@@ -64,6 +64,14 @@ export class MysqlDatabase implements IDatabaseModel {
         }
     }
 
+    login(model: Sequelize.ModelCtor<Sequelize.Model<any, any>>, data: object): any {
+        try {
+            return model.findOne(data)
+        } catch (err) {
+            throw new Error((err as Error).message);
+        }
+    }
+
     createModel(name: string, properties: Sequelize.ModelAttributes): Sequelize.ModelCtor<Sequelize.Model<any, any>> {
         return this._adapter.define(name, properties, {
             timestamps: true

@@ -8,7 +8,7 @@ export default MysqlDatabase.getInstance().createModel('posts', {
         primaryKey: true,
         field: 'postid'
     },
-   contenText: DataTypes.STRING,
+   contentText: DataTypes.STRING,
    createdAt: {
     type: DataTypes.DATE,
     field: 'created_at'

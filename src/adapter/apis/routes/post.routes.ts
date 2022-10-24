@@ -10,8 +10,12 @@ export class AccountsRoutes extends CommonRoutesConfig {
 
     configureRoutes(): express.Application {
         this.app.route(`/post`)
-            .get(postController.listPosts)
-            .post( postController.createPosts
+            .get(postController.listPosts,
+                
+                )
+        this.app.route(`/post`)
+
+            .post( postController.createPosts,
                 
             );
             return this.app;

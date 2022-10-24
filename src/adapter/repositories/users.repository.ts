@@ -53,9 +53,10 @@ export class UsersRepository implements IUsersRepository {
         return resource;
     }
 
-    async loginUser(resource: string): Promise<IUsersEntity> {
-        let user = await this._database.login(this._usersModel, resource)
-        return user
+    async login(resource: IUsersEntity): Promise<any> {
+        const { person } = entityToModelUsersMysql(resource)
+        const personLogin = await this._database.login(this._usersModel, person)
+        return personLogin
     }
 }
 

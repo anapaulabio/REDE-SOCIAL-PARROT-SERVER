@@ -15,8 +15,8 @@ export class UsersRoutes extends CommonRoutesConfig {
         this.app.route('/cadastro')
             .post(usersController.createUsers)
         
-       // this.app.route('/login')
-       //     .post(authHelperAdapter.login)
+        this.app.route('/login')
+           .post(usersController.loginOne)
     
         this.app.route('/users/:UserId')
             .get(usersController.getUsersById)

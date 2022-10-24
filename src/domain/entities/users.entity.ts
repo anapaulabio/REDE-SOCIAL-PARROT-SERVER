@@ -1,10 +1,10 @@
 export interface IUsersEntity {
     indexId?: number,
-    name: string,
+    name?: string,
     email: string,
-    apartment: number,
+    apartment?: number,
     password: string,
-    linkdafoto: string,
+    linkdafoto?: string,
     createdAt?: Date,
     updatedAt?: Date
 }

@@ -6,5 +6,6 @@ export interface IUsersRepository {
     deleteById(resourceId: number): Promise<void>,
     list(): Promise<IUsersEntity[]>,
     updateById(resource:IUsersEntity): Promise<IUsersEntity | undefined>,
+    login(resource: IUsersEntity): Promise<IUsersEntity>
 
 }

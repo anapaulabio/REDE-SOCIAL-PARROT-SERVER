@@ -3,15 +3,18 @@ import { DataTypes } from "sequelize";
 import { create } from 'domain';
 
 export default MysqlDatabase.getInstance().createModel('posts', {
-    postid: {
+    indexId: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        },
-    userid: {
-        type: DataTypes.INTEGER,
-              
+        field: 'postid'
+    },
+   contentText: DataTypes.STRING,
+   createdAt: {
+    type: DataTypes.DATE,
+    field: 'created_at'
 },
-   content_text: DataTypes.STRING,
-   createdAt: DataTypes.DATE,
-   updateAt: DataTypes.DATE
+    updatedAt: {
+    type: DataTypes.DATE,
+    field: 'updated_at'
+}
 })

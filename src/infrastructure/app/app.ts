@@ -7,6 +7,7 @@ import cors from 'cors';
 import { debug } from 'debug';
 import { CommonRoutesConfig } from '../../adapter/apis/routes/common.routes.config';
 import { UsersRoutes } from '../../adapter/apis/routes/users.routes';
+import {PostRoutes} from '../../adapter/apis/routes/post.routes'
 
 
 
@@ -36,6 +37,8 @@ if(!process.env.DEBUG) {
 app.use(expressWinston.logger(loggerOptions));
 
 routes.push(new UsersRoutes(app));
+routes.push(new PostRoutes(app));
+
 
 
 const runningMessage = `Servidor rodando na porta ${port}`;

@@ -9,8 +9,8 @@ export default MysqlDatabase.getInstance().createModel('posts', {
         },
     userid: {
         type: DataTypes.INTEGER,
-        
-    },
+              
+},
    content_text: DataTypes.STRING,
    createdAt: DataTypes.DATE,
    updateAt: DataTypes.DATE

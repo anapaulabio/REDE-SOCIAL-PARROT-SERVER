@@ -3,8 +3,10 @@ import entityToModelPostMysql from './entityToModel.post.mysql'
 
 
 export default function (post: any):IPostsEntity | undefined {
-    if(!post)
-    return
+    if(!post){
+        return
+    }
+    
 
     let entity:IPostsEntity = {
         indexId: post.indexId,

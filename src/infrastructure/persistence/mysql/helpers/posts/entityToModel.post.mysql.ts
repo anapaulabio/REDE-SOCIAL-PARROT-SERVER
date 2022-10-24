@@ -3,7 +3,7 @@ import {IPostsEntity} from '../../../../../domain/entities/post.entity'
 
 export default function (post: IPostsEntity){
     const Post = {
-        userid: post.indexId,
+        indexId: post.indexId,
         content: post.contentText
 }
  

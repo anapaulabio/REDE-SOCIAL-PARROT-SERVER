@@ -1,36 +1,34 @@
 import express from 'express';
 import bcrypt from 'bcrypt';
 import { validate, Joi, ValidationError } from 'express-validation';
-import { JwtPayload } from 'jsonwebtoken';
+import jwt, { JwtPayload } from 'jsonwebtoken';
 
+import SECRET_KEY from '../../../infrastructure/config/secret.config';
 import logger from '../../../infrastructure/logs/winston.logs';
 import loginUserUsecase from '../../../domain/usecases/users/login.user.usecase';
 import readUserUsecase from '../../../domain/usecases/users/read.user.usecase';
 
 
-export interface CustomRequest extends Request {
+export interface CustomRequest extends express.Request {
     token: string | JwtPayload;
 }
 
 class UsersMiddleware {
-    /* ainda não testei 
-     async auth(req: Request, res: Response, next: NextFunction) {
-          try {
+    //Não autoriza 
+    /* async auth(req: express.Request, res: express.Response, next: express.NextFunction) {
               const token = req.header('Authorization')?.replace('Bearer ', '');
   
-              if (!token) {
-                  throw new Error();
-              }
-  
-              const decoded = jwt.verify(token, auth.key);
+            if (token) {
+              const decoded = jwt.verify(token, SECRET_KEY);
               (req as CustomRequest).token = decoded;
   
-              next();
-          } catch (err) {
+              next()
+            }
+            else {
               res.status(401).send('Please authenticate');
           }
-      }
-  */
+      }*/
+  
 
     registerValidation = validate({
         body: Joi.object({

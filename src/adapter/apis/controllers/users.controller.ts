@@ -3,7 +3,7 @@ import debug from 'debug';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt'
 
-import {auth} from '../../../infrastructure/config/database.config'
+import SECRET_KEY from '../../../infrastructure/config/secret.config';
 import { getErrorMessage } from '../../helpers/errors.helper.adapter';
 
 import createUserUsecase from '../../../domain/usecases/users/create.user.usecase';
@@ -56,11 +56,12 @@ class UsersController {
             const token = jwt.sign({
                 indexId: user.indexId,
                 name: user.name,
-                email: user.email
+                email: user.email,
+                apartment: user.apartment
             },
-                auth.key)
-            console.log(token)
-            return res.status(200).send(user);
+            SECRET_KEY)
+            
+            return res.status(200).send(token);
         } catch (error) {
             return res.status(500).send(getErrorMessage(error));
         }

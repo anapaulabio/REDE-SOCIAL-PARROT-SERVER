@@ -8,7 +8,7 @@ import debug from 'debug';
 
 class PostController { 
     async listPosts(req: express.Request, res: express.Response){
-
+/*comm */
         try{
             const posts = await listPostUsecase.execute();
             debug.log(posts)

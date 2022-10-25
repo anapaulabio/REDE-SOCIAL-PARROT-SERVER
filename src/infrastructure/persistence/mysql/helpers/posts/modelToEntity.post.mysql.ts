@@ -16,7 +16,7 @@ export default function (post: any):IPostsEntity | undefined {
         createdAt: post.createdAt,
         updatedAt: post.updatedAt
         
-       
+       /*comm*/
     
     }
 

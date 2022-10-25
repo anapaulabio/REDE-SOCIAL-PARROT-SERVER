@@ -1,6 +1,7 @@
 import * as Sequelize from "sequelize";
-import {databaseConfig} from "../../config/database.config";
+import databaseConfig from "../../config/database.config";
 import { IDatabaseModel } from "../database.model.interface";
+import usersModelsMysql from "./models/users.models.mysql";
 
 export class MysqlDatabase implements IDatabaseModel {
     private static _instance: MysqlDatabase;
@@ -64,9 +65,11 @@ export class MysqlDatabase implements IDatabaseModel {
         }
     }
 
-    login(model: Sequelize.ModelCtor<Sequelize.Model<any, any>>, data: object): any {
+    login(model: Sequelize.ModelCtor<Sequelize.Model<any, any>> , data: {email: string, password: string}): any {
         try {
-            return model.findOne(data)
+            return model.findOne({
+                where: {email: data.email}
+            })
         } catch (err) {
             throw new Error((err as Error).message);
         }

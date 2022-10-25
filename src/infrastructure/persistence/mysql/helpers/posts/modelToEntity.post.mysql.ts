@@ -9,8 +9,11 @@ export default function (post: any):IPostsEntity | undefined {
     
 
     let entity:IPostsEntity = {
+        postid: post.postid,
         userid: post.userid,
-        contentText: post.contentText
+        contentText: post.contentText,
+       
+        
     }
 
     return (entity as IPostsEntity)

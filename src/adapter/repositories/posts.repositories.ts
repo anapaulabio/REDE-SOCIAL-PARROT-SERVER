@@ -9,7 +9,6 @@ import postsModel from "../../infrastructure/persistence/mysql/models/posts.mode
 import entityToModelPost from "../../infrastructure/persistence/mysql/helpers/posts/entityToModel.post.mysql";
 import modelToEntityPostMysql from "../../infrastructure/persistence/mysql/helpers/posts/modelToEntity.post.mysql";
 import * as sequelize from "sequelize";
-import entityToModelPostMysql from "../../infrastructure/persistence/mysql/helpers/posts/entityToModel.post.mysql";
 /*import modelToEntityAccount from "../../infra/persistence/mysql/helpers/accounts/modelToEntity.account.mysql";*/
 
 export class PostsRepositories implements IPostsRepository {
@@ -23,7 +22,7 @@ export class PostsRepositories implements IPostsRepository {
         const {Post} = entityToModelPost(resource);
         const postsModel = await this._database.create(this._postModel, Post)
 
-        return resource
+        return postsModel
     } 
     
     async list():Promise<IPostsEntity[]>{
@@ -44,12 +43,9 @@ export class PostsRepositories implements IPostsRepository {
       }
   }
 
-
-
 }
 
 export default new PostsRepositories(
  MysqlDatabase.getInstance(),
  postsModel
-
 )

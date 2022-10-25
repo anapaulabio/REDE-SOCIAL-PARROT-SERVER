@@ -5,7 +5,7 @@ export default function (post: IPostsEntity){
     const Post = {
         postid: post.postid,
         userid: post.userid,
-        contentText: post.contentText
+        contentText: post.contentText,
 }
  
  return{

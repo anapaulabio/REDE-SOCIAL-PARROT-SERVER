@@ -43,6 +43,17 @@ export class PostsRepositories implements IPostsRepository {
       }
   }
 
+  async updateById(resource: IPostsEntity): Promise<IPostsEntity | undefined> {
+    
+    let postModel = await this._database.read(this._postModel, resource.postid!)
+   
+    let { Post } = entityToModelPost(resource)
+    
+    await this._database.update(postModel, Post);
+           
+    return resource;
+}
+
 }
 
 export default new PostsRepositories(

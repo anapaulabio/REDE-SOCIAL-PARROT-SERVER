@@ -6,5 +6,5 @@ export interface IPostsRepository{
     create(resource: IPostsEntity): Promise<IPostsEntity>,
    /* deleteById(resourceId: number): Promise<void>,*/
     list(): Promise<IPostsEntity[]>,
-   /* updateById(resource: IPostsEntity): Promise<IPostsEntity | undefined>*/
+    updateById(resource: IPostsEntity): Promise<IPostsEntity | undefined>
 }

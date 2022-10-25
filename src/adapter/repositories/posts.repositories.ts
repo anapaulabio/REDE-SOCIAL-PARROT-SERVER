@@ -34,6 +34,16 @@ export class PostsRepositories implements IPostsRepository {
 
     }
 
+    async readById(resourceId: number): Promise<IPostsEntity | undefined> {
+      try {
+      const post  = await this._database.read(this._postModel, resourceId)
+      return modelToEntityPostMysql(post)
+      
+      } catch (err) {
+          console.error("Deu ruim", err)
+      }
+  }
+
 
 
 }

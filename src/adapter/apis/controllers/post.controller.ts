@@ -2,6 +2,7 @@ import express from 'express';
 import createPostUsecase from '../../../domain/usecases/posts/create.post.usecase';
 import listPostUsecase from '../../../domain/usecases/posts/list.post.usecase';
 import readPostUsecase from '../../../domain/usecases/posts/read.post.usecase';
+import updatePostUsecase from '../../../domain/usecases/posts/update.post.usecase';
 import debug from 'debug';
 
 
@@ -35,6 +36,12 @@ class PostController {
         
         res.status(201).send(posts);
 
-}}
+    }
+async updatePosts(req: express.Request, res: express.Response) {
+    let post = await updatePostUsecase.execute(req.body)
+    
+    res.status(200).send(post)
+}
+}
 
 export default new PostController();

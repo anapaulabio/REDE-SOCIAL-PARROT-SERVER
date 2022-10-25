@@ -5,13 +5,14 @@ export default (user: any): IUsersEntity | undefined => {
     if (!user){
     return
     }
-
+    
+    let passHash = bcrypt.hashSync(user.password, 10)
     let person: IUsersEntity = {
         indexId: user.indexId,
         name: user.name,
         email: user.email,
         apartment: user.apartment,
-        password: user.password = bcrypt.hashSync(user.password, 10),
+        password: passHash,
         linkdafoto: user.linkdafoto
     }
 

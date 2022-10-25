@@ -6,12 +6,22 @@ export default MysqlDatabase.getInstance().createModel('posts', {
     postid: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        },
+        field: 'postid'
+    },
     userid: {
         type: DataTypes.INTEGER,
-              
-},
-   content_text: DataTypes.STRING,
-   createdAt: DataTypes.DATE,
-   updateAt: DataTypes.DATE
+        field: 'userid'
+    },
+   contentText:{
+   type:  DataTypes.STRING,
+   field: 'content_text'
+    } ,
+   createdAt: {
+    type: DataTypes.DATE,
+    field: 'created_at'
+    },
+    updatedAt: {
+    type: DataTypes.DATE,
+    field: 'updated_at'
+    }
 })

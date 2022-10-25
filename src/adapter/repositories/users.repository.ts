@@ -47,8 +47,10 @@ export class UsersRepository implements IUsersRepository {
     async updateById(resource: IUsersEntity): Promise<IUsersEntity | undefined> {
     
         let personModel = await this._database.read(this._usersModel, resource.indexId!)
-        let users = entityToModelUsersMysql(resource)
-        await this._database.update(personModel, users);
+       
+        let { person } = entityToModelUsersMysql(resource)
+        
+        await this._database.update(personModel, person);
                
         return resource;
     }

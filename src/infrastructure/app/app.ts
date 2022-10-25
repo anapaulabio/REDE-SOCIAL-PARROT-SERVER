@@ -8,20 +8,18 @@ import { debug } from 'debug';
 import { CommonRoutesConfig } from '../../adapter/apis/routes/common.routes.config';
 import { UsersRoutes } from '../../adapter/apis/routes/users.routes';
 import {PostRoutes} from '../../adapter/apis/routes/post.routes'
-
-
-
+import handleError from '../../adapter/apis/middlewares/handle.error.helper.adapter'
 
 const app: express.Application = express();
 const server: http.Server = http.createServer(app);
 const port = 8000;
 const routes: CommonRoutesConfig[] = [];
 const debugLog: debug.IDebugger = debug('app');
-import handleError from '../../adapter/middlewares/handle.error.helper.adapter'
+
 
 app.use(express.json());
 app.use(cors());
-app.use(handleError);
+//app.use(handleError);
 
 const loggerOptions: expressWinston.LoggerOptions = {
     transports: [new winston.transports.Console()],

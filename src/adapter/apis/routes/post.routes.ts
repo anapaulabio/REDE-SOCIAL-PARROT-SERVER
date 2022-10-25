@@ -17,6 +17,11 @@ export class PostRoutes extends CommonRoutesConfig {
             .post( postController.createPosts,
                 
             );
+
+            this.app.route('/post/:PostId')
+            .get(postController.getPostById)
+            
+
             return this.app;
 
             }}

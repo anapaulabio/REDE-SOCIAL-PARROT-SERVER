@@ -1,39 +1,48 @@
 import express from 'express';
+
 import { CommonRoutesConfig } from "./common.routes.config";
 import usersController from '../controllers/users.controller';
 import usersMiddlewares from '../middlewares/users.middlewares';
 
 
+
 export class UsersRoutes extends CommonRoutesConfig {
-    constructor(app: express.Application){
-      super(app, 'UsersRoutes')
+    constructor(app: express.Application) {
+        super(app, 'UsersRoutes')
     }
 
     configureRoutes(): express.Application {
         this.app.route('/users')
             .get(usersController.getUsers)
-        
-            this.app.route('/cadastro')
+
+        this.app.route('/cadastro')
             .post(
                 usersMiddlewares.registerValidation,
                 usersController.createUsers
-                )
-        
+            )
+
         this.app.route('/login')
             .post(
                 usersMiddlewares.loginValidation,
-               // usersMiddlewares.validatePassword,
+                usersMiddlewares.validateEmail,
+                usersMiddlewares.validatePassword,
                 usersController.loginOne
-                )
-    
+            )
+
         this.app.route('/users/:UserId')
-            .all(usersMiddlewares.valitateUserExists)
+            .all(
+                usersMiddlewares.getByIdValidation,
+                usersMiddlewares.valitateUserExists
+            )
             .get(usersController.getUsersById)
-            .put(usersController.updateUsers)
+            .put(
+                usersMiddlewares.updateValidation,
+                usersController.updateUsers
+            )
             .delete(usersController.removeUsers)
-            
-    
+
+        this.app.use(usersMiddlewares.validateError)
         return this.app
-    } 
+    }
 }
 

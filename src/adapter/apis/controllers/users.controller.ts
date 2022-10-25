@@ -3,7 +3,7 @@ import debug from 'debug';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt'
 
-import { auth } from '../../../infrastructure/config/database.config'
+import {auth} from '../../../infrastructure/config/database.config'
 import { getErrorMessage } from '../../helpers/errors.helper.adapter';
 
 import createUserUsecase from '../../../domain/usecases/users/create.user.usecase';
@@ -53,15 +53,6 @@ class UsersController {
     async loginOne(req: express.Request, res: express.Response) {
         try { 
             const user = await loginUserUsecase.execute(req.body)
-            let isMacth = bcrypt.compareSync(req.body.password, user.password)
-
-            if (!user) {
-                res.status(401).send("Senha ou email inválido, tente novamente")
-            } 
-            
-            if (!isMacth) {
-                res.status(401).send("Senha ou email inválido, tente novamente")
-            }
             const token = jwt.sign({
                 indexId: user.indexId,
                 name: user.name,

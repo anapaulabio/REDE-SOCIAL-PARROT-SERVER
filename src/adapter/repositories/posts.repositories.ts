@@ -6,22 +6,23 @@ import { MysqlDatabase } from "../../infrastructure/persistence/mysql/mysql.data
 import { IPostsRepository } from "../../domain/repositories/post.repository.interface";
 
 import postsModel from "../../infrastructure/persistence/mysql/models/posts.model";
-import entityToModelAccount from "../../infrastructure/persistence/mysql/helpers/posts/entityToModel.post.mysql";
+import entityToModelPost from "../../infrastructure/persistence/mysql/helpers/posts/entityToModel.post.mysql";
 import modelToEntityPostMysql from "../../infrastructure/persistence/mysql/helpers/posts/modelToEntity.post.mysql";
+import * as sequelize from "sequelize";
+import entityToModelPostMysql from "../../infrastructure/persistence/mysql/helpers/posts/entityToModel.post.mysql";
 /*import modelToEntityAccount from "../../infra/persistence/mysql/helpers/accounts/modelToEntity.account.mysql";*/
 
 export class PostsRepositories implements IPostsRepository {
 
     constructor(
     private _database:IDatabaseModel,
-    private _postModel: any
+    private _postModel: sequelize.ModelCtor<sequelize.Model<any, any>>
     ){}
     
     async create(resource: IPostsEntity): Promise<IPostsEntity> {
-        const {Post} = entityToModelAccount(resource);
+        const {Post} = entityToModelPost(resource);
         const postsModel = await this._database.create(this._postModel, Post)
 
-        resource.indexId = postsModel.null
         return resource
     } 
     

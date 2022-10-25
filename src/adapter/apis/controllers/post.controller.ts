@@ -7,6 +7,11 @@ import debug from 'debug';
 
 class PostController { 
     async listPosts(req: express.Request, res: express.Response){
+
+        const posts = await listPostUsecase.execute();
+        res.status(200).send(posts);
+        debug.log(posts)
+
         try{
             const posts = await listPostUsecase.execute();
             debug.log(posts)
@@ -16,6 +21,7 @@ class PostController {
             res.status(404).send("erro, chame um admin")
         }
         
+
 
     }
     async createPosts(req: express.Request, res: express.Response) {

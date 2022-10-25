@@ -1,4 +1,5 @@
 import "dotenv/config";
+import { Secret } from "jsonwebtoken";
 
 export const databaseConfig = {
     database: String(process.env.DB_DBNAME),
@@ -9,10 +10,7 @@ export const databaseConfig = {
     dialect: 'mysql'
 };
 
-export const auth = {
-    key: String(process.env.SECRET),
-  };
 
+export default databaseConfig
 
-
-module.exports = { databaseConfig, auth };
+module.exports =  databaseConfig;

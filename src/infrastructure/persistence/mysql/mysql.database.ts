@@ -1,5 +1,5 @@
 import * as Sequelize from "sequelize";
-import databaseConfig from "../../config/database.config";
+import {databaseConfig} from "../../config/database.config";
 import { IDatabaseModel } from "../database.model.interface";
 import usersModelsMysql from "./models/users.models.mysql";
 

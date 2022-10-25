@@ -1,5 +1,7 @@
 import express from 'express';
 import debug from 'debug';
+import jwt from 'jsonwebtoken';
+import { auth } from '../../../infrastructure/config/database.config'
 
 import createUserUsecase from '../../../domain/usecases/users/create.user.usecase';
 import listUserUsecase from '../../../domain/usecases/users/list.user.usecase';
@@ -51,8 +53,17 @@ class UsersController {
 
     async loginOne(req: express.Request, res: express.Response){
         try {
-          const foundUser = await loginUserUsecase.execute(req.body);
-          res.status(200).send(foundUser);
+          const user = await loginUserUsecase.execute(req.body)
+          if (!user) {
+            throw new Error("Usuario não existe")
+          }
+          const token = jwt.sign({
+              indexId: user.indexId,
+              name: user.name,
+              email: user.email
+          },
+          auth.key)
+          res.status(200).send(token);
         } catch (error) {
           return res.status(500).send(getErrorMessage(error));
         }

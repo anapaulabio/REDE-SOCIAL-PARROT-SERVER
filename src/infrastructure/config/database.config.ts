@@ -1,6 +1,6 @@
 import "dotenv/config";
 
-const databaseConfig = {
+export const databaseConfig = {
     database: String(process.env.DB_DBNAME),
     username: String(process.env.DB_USER),
     password: String(process.env.DB_PASS),
@@ -9,6 +9,10 @@ const databaseConfig = {
     dialect: 'mysql'
 };
 
-export default databaseConfig;
+export const auth = {
+    key: String(process.env.SECRET),
+  };
 
-module.exports = databaseConfig;
+
+
+module.exports = { databaseConfig, auth };

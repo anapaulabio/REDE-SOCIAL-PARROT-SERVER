@@ -53,13 +53,14 @@ class UsersController {
     async loginOne(req: express.Request, res: express.Response) {
         try { 
             const user = await loginUserUsecase.execute(req.body)
-            let isMacth = bcrypt.compareSync(req.body.password, user.password)
-
+            // o erro 401 ainda desloga a aplicação -> CORRIGIR
             if (!user) {
                 res.status(401).send("Senha ou email inválido, tente novamente")
             } 
-            
-            if (!isMacth) {
+
+            let isMatch = bcrypt.compareSync(req.body.password, user.password)
+
+            if (!isMatch) {
                 res.status(401).send("Senha ou email inválido, tente novamente")
             }
             const token = jwt.sign({

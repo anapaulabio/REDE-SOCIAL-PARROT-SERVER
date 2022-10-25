@@ -4,7 +4,7 @@ import bcrypt from 'bcrypt';
 import { validate, Joi} from 'express-validation';
 import { auth } from '../../../infrastructure/config/database.config';
 
-
+import logger from '../../../infrastructure/logs/winston.logs';
 import loginUserUsecase from '../../../domain/usecases/users/login.user.usecase';
 import readUserUsecase from '../../../domain/usecases/users/read.user.usecase';
 
@@ -32,17 +32,22 @@ class UsersMiddleware {
     }
 */
     async validatePassword( req: Request, res: Response, next: NextFunction){
-        try { //só funciona no controller
+        try { // o email ou senha invalidos desloga a aplicação --> corrigir
+            // só funciona no controller
             const user = await loginUserUsecase.execute(req.body)
             let isMacth = bcrypt.compareSync(req.body.password, user.password)
-
-            if (!user) {
-                res.status(401).send("Senha ou email inválido, tente novamente")
+            if (user && isMacth){
+                next()
+            } else if (!user) {
+                res.status(404).send("Senha ou email inválido, tente novamente")
             } 
+
+         
             
             if (!isMacth) {
-                res.status(401).send("Senha ou email inválido, tente novamente")
+                res.status(404).send("Senha ou email inválido, tente novamente")
             }
+           
             const token = jwt.sign({
                 indexId: user.indexId,
                 name: user.name,
@@ -50,26 +55,22 @@ class UsersMiddleware {
             },
                 auth.key)
             console.log(token)
-
-            next()
+            
+          next()
         } catch (err) {
             return res.status(500).send("Deu ruim")
         }
     }
 
-    async valitateUserExists( req: Request, res: Response, next: NextFunction){
-        try {
-            let user = await readUserUsecase.execute({
-                UserId: Number(req.params.UserId)
-            })
-    
-            if (!user) {
-                res.status(401).send("Usuário não encontrado")
-            } 
-
+    async valitateUserExists(req: Request, res: Response, next: NextFunction) {
+        let user = await readUserUsecase.execute({
+            UserId: Number(req.params.UserId)
+        })
+        if (user) {
+            logger.info(["Usuario encontrado: ", user])
             next()
-        } catch (error) {
-            return res.status(500).send("Deu ruim")
+        } else {
+            res.status(404).send("Usuário não encontrado")
         }
     }
     

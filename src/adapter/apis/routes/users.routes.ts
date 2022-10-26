@@ -13,35 +13,36 @@ export class UsersRoutes extends CommonRoutesConfig {
 
     configureRoutes(): express.Application {
         this.app.route('/users')
-            .get(usersController.getUsers)
+            .get(usersController.getUsers);
 
         this.app.route('/cadastro')
             .post(
-                usersMiddlewares.registerValidation,
+                usersMiddlewares.validateRegister,
                 usersController.createUsers
-            )
+            );
 
         this.app.route('/login')
             .post(
-                usersMiddlewares.loginValidation,
+                usersMiddlewares.validateLogin,
                 usersMiddlewares.validateEmail,
                 usersMiddlewares.validatePassword,
                 usersController.loginOne
-            )
+            );
 
         this.app.route('/users/:UserId')
             .all(
-                usersMiddlewares.getByIdValidation,
+                usersMiddlewares.validateGetById,
                 usersMiddlewares.valitateUserExists
             )
             .get(usersController.getUsersById)
             .put(
-                usersMiddlewares.updateValidation,
+                usersMiddlewares.validateUpdate,
                 usersController.updateUsers
             )
-            .delete(usersController.removeUsers)
+            .delete(usersController.removeUsers);
 
-        this.app.use(usersMiddlewares.validateError)
+        this.app.use(usersMiddlewares.validateError);
+
         return this.app
     }
 }

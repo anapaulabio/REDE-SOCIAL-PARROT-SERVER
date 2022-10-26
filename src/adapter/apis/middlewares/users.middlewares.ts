@@ -1,38 +1,20 @@
 import express from 'express';
 import bcrypt from 'bcrypt';
 import { validate, Joi, ValidationError } from 'express-validation';
-import { JwtPayload } from 'jsonwebtoken';
+import jwt, { JwtPayload } from 'jsonwebtoken';
 
+import SECRET_KEY from '../../../infrastructure/config/secret.config';
 import logger from '../../../infrastructure/logs/winston.logs';
 import loginUserUsecase from '../../../domain/usecases/users/login.user.usecase';
 import readUserUsecase from '../../../domain/usecases/users/read.user.usecase';
+import usersController from '../controllers/users.controller';
 
-
-export interface CustomRequest extends Request {
+export interface CustomRequest extends express.Request {
     token: string | JwtPayload;
 }
-
 class UsersMiddleware {
-    /* ainda não testei 
-     async auth(req: Request, res: Response, next: NextFunction) {
-          try {
-              const token = req.header('Authorization')?.replace('Bearer ', '');
-  
-              if (!token) {
-                  throw new Error();
-              }
-  
-              const decoded = jwt.verify(token, auth.key);
-              (req as CustomRequest).token = decoded;
-  
-              next();
-          } catch (err) {
-              res.status(401).send('Please authenticate');
-          }
-      }
-  */
 
-    registerValidation = validate({
+    validateRegister = validate({
         body: Joi.object({
             name: Joi.string().required(),
             email: Joi.string().email().required(),
@@ -43,20 +25,20 @@ class UsersMiddleware {
     })
 
 
-    loginValidation = validate({
+    validateLogin = validate({
         body: Joi.object({
             email: Joi.string().email().required(),
             password: Joi.string().min(8).required()
         })
     })
 
-    getByIdValidation = validate({
+    validateGetById = validate({
         params: Joi.object({
             UserId: Joi.number().required(),
         })
     })
 
-    updateValidation = validate({
+    validateUpdate = validate({
         body: Joi.object({
             indexId: Joi.number().required(),
             name: Joi.string().required(),

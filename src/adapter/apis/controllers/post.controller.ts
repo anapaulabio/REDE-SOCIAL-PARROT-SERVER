@@ -3,6 +3,7 @@ import createPostUsecase from '../../../domain/usecases/posts/create.post.usecas
 import listPostUsecase from '../../../domain/usecases/posts/list.post.usecase';
 import readPostUsecase from '../../../domain/usecases/posts/read.post.usecase';
 import updatePostUsecase from '../../../domain/usecases/posts/update.post.usecase';
+import ReadPostByIdUser from '../../../domain/usecases/posts/Read.post.byIdUser';
 import debug from 'debug';
 
 
@@ -41,6 +42,11 @@ async updatePosts(req: express.Request, res: express.Response) {
     let post = await updatePostUsecase.execute(req.body)
     
     res.status(200).send(post)
+}
+
+async postsByIdUser(req: express.Request, res: express.Response){
+    const posts = await ReadPostByIdUser.execute(req.params.UserId)
+    res.status(200).send(posts);
 }
 }
 

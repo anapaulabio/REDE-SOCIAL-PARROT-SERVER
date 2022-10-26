@@ -1,13 +1,11 @@
 import express from 'express';
 import secret from "../../../infrastructure/config/secret.config";
 import jwt  from 'jsonwebtoken'
-import { JwtPayload } from 'jsonwebtoken';
+import { IToken } from '../../../infrastructure/config/token.config';
 import { Joi, validate, ValidationError } from 'express-validation';
 
 
-export interface IToken extends express.Request {
-    token: string | JwtPayload;
-}
+
 
 class PostMiddleware {
     validateGetById = validate({

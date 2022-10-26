@@ -53,6 +53,32 @@ export class PostsRepositories implements IPostsRepository {
            
     return resource;
 }
+async groupPostsByIdUser(UseriD: string): Promise<{
+  UserId: string,
+  postid: Number
+  contentText: string
+
+}>{
+  
+  const postByIdUser = await this._database.selectQuery(
+    `SELECT * from posts WHERE userid = :UserId`, 
+    {
+      UseriD
+    }
+
+  )
+
+  if(postByIdUser[1].UserId) {
+    return postByIdUser[1];
+  }else{
+    return {
+      
+    postid:0,
+    UserId: UseriD,
+    contentText: ''}
+
+  }
+}
 
 }
 

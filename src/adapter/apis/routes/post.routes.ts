@@ -21,6 +21,9 @@ export class PostRoutes extends CommonRoutesConfig {
             this.app.route('/post/:PostId')
             .get(postController.getPostById)
             .put(postController.updatePosts)
+
+            this.app.route(`/users/post/:UserId`)
+            .get(postController.postsByIdUser)
             
 
             return this.app;

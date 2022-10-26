@@ -3,9 +3,9 @@ import secret from "../../../infrastructure/config/secret.config";
 import jwt  from 'jsonwebtoken'
 import { JwtPayload } from 'jsonwebtoken';
 import { Joi, validate, ValidationError } from 'express-validation';
-// também não autoriza
 
-export interface CustomRequest extends express.Request {
+
+export interface IToken extends express.Request {
     token: string | JwtPayload;
 }
 
@@ -32,14 +32,15 @@ class PostMiddleware {
 
     authJWT(req: express.Request, res: express.Response, next: express.NextFunction) {
         try {
-            const token = req.headers.authorization?.replace('Baerer', '')
+            const token = req.header('Authorization')?.split(' ')[1]
             console.log(token)
             if (!token) {
                 console.error('deu ruim')
               }
         
               const decoded = jwt.verify(token!, secret);
-            (req as CustomRequest).token = decoded;
+            (req as IToken).token = decoded;
+            
           
             next()
         

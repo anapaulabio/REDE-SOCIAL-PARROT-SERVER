@@ -2,7 +2,6 @@ import { CommonRoutesConfig } from "./common.routes.config";
 import express from "express";
 import postController from "../controllers/post.controller"
 import postMiddleware from "../middlewares/post.middleware";
-import authMiddleware from "../middlewares/auth.middleware";
 
 
 export class PostRoutes extends CommonRoutesConfig {
@@ -12,23 +11,29 @@ export class PostRoutes extends CommonRoutesConfig {
 
     configureRoutes(): express.Application {
         this.app.route(`/post`)
-            .get(postController.listPosts,
-                
-                )
+            .get(
+                postMiddleware.authJWT,
+                postController.listPosts,
+                );
         this.app.route(`/post`)
             .post( 
-               // usersMiddlewares.auth,
-                authMiddleware,
+                postMiddleware.authJWT,
                 postMiddleware.validateRegister,
                 postController.createPosts 
             );
 
             this.app.route('/post/:PostId')
-            .get(postMiddleware.validateGetById,
-                postController.getPostById)
-            .put(postController.updatePosts)
+            .all(postMiddleware.validateGetById,
+                postMiddleware.authJWT)
+            .get(postController.getPostById)
+            .put(postController.updatePosts);
 
             this.app.route('/users/posts/:UserId')
+                .get(
+                    postMiddleware.authJWT,
+                    postController.postsByIdUser
+                    );
+
             this.app.use(postMiddleware.validateError);
 
             return this.app

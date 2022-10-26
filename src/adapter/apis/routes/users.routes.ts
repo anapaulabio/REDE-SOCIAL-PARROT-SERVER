@@ -24,8 +24,6 @@ export class UsersRoutes extends CommonRoutesConfig {
         this.app.route('/login')
             .post(
                 usersMiddlewares.validateLogin,
-                usersMiddlewares.validateEmail,
-                usersMiddlewares.validatePassword,
                 usersController.loginOne
             );
 

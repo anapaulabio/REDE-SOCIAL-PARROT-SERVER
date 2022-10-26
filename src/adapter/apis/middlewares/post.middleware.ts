@@ -30,7 +30,7 @@ class PostMiddleware {
 
     authJWT(req: express.Request, res: express.Response, next: express.NextFunction) {
         try {
-            const token = req.header('Authorization')?.split(' ')[1]
+            const token = req.header('Authorization')?.replace('Baerer ', '')
             console.log(token)
             if (!token) {
                 console.error('deu ruim')

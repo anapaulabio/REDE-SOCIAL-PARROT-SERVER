@@ -57,15 +57,8 @@ class UsersController {
     async loginOne(req: express.Request, res: express.Response) {
         try {
             const user = await loginUserUsecase.execute(req.body)
-            const token = jwt.sign({
-                indexId: user.indexId,
-                name: user.name,
-                email: user.email,
-                apartment: user.apartment
-            },
-                secret)
 
-            return res.status(200).send({ data: user, token });
+            return res.status(200).send({ data: user });
         } catch (error) {
             return res.status(500).send(getErrorMessage(error));
         }

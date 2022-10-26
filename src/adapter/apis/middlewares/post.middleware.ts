@@ -1,19 +1,16 @@
 import express from 'express';
 import secret from "../../../infrastructure/config/secret.config";
 import jwt  from 'jsonwebtoken'
-import { JwtPayload } from 'jsonwebtoken';
-import { Joi, validate } from 'express-validation';
-// também não autoriza
+import { IToken } from '../../../infrastructure/config/token.config';
+import { Joi, validate, ValidationError } from 'express-validation';
 
-export interface CustomRequest extends express.Request {
-    token: string | JwtPayload;
-}
+
+
 
 class PostMiddleware {
-
     validateGetById = validate({
         params: Joi.object({
-            UserId: Joi.number().required(),
+            PostId: Joi.number().required(),
         })
     })
 
@@ -33,14 +30,15 @@ class PostMiddleware {
 
     authJWT(req: express.Request, res: express.Response, next: express.NextFunction) {
         try {
-            const token = req.headers.authorization?.replace('Baerer', '')
+            const token = req.header('Authorization')?.split(' ')[1]
             console.log(token)
             if (!token) {
                 console.error('deu ruim')
               }
         
               const decoded = jwt.verify(token!, secret);
-            (req as CustomRequest).token = decoded;
+            (req as IToken).token = decoded;
+            
           
             next()
         
@@ -50,6 +48,9 @@ class PostMiddleware {
     }
    
     async validateError (err: any, req: express.Request, res: express.Response, next: express.NextFunction) {
+        if (err instanceof ValidationError) {
+            return res.status(err.statusCode).json(err)
+        }
         if (err.name === "UnauthorizedError") {
           res.status(401).send("invalid token...");
         } else {

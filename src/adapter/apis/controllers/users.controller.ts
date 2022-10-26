@@ -3,7 +3,7 @@ import debug from 'debug';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt'
 
-import SECRET_KEY from '../../../infrastructure/config/secret.config';
+import secret from '../../../infrastructure/config/secret.config';
 import { getErrorMessage } from '../../helpers/errors.helper.adapter';
 
 import createUserUsecase from '../../../domain/usecases/users/create.user.usecase';
@@ -38,20 +38,24 @@ class UsersController {
 
     async updateUsers(req: express.Request, res: express.Response) {
         let user = await updateUserUsecase.execute(req.body)
-        
+
         res.status(200).send(user)
     }
 
     async removeUsers(req: express.Request, res: express.Response) {
+        try {
             await deleteUserUsecase.execute({
                 UserId: Number(req.params.UserId)
             })
-        
-        return res.status(204).send()
+
+            return res.status(204).send()
+        } catch (error) {
+            return res.status(500).send(getErrorMessage(error));
+        }
     }
 
     async loginOne(req: express.Request, res: express.Response) {
-        try { 
+        try {
             const user = await loginUserUsecase.execute(req.body)
             const token = jwt.sign({
                 indexId: user.indexId,
@@ -59,9 +63,9 @@ class UsersController {
                 email: user.email,
                 apartment: user.apartment
             },
-            SECRET_KEY)
-            
-            return res.status(200).send(token);
+                secret)
+
+            return res.status(200).send({ data: user, token });
         } catch (error) {
             return res.status(500).send(getErrorMessage(error));
         }

@@ -7,30 +7,14 @@ import SECRET_KEY from '../../../infrastructure/config/secret.config';
 import logger from '../../../infrastructure/logs/winston.logs';
 import loginUserUsecase from '../../../domain/usecases/users/login.user.usecase';
 import readUserUsecase from '../../../domain/usecases/users/read.user.usecase';
-
+import usersController from '../controllers/users.controller';
 
 export interface CustomRequest extends express.Request {
     token: string | JwtPayload;
 }
-
 class UsersMiddleware {
-    //Não autoriza 
-    /* async auth(req: express.Request, res: express.Response, next: express.NextFunction) {
-              const token = req.header('Authorization')?.replace('Bearer ', '');
-  
-            if (token) {
-              const decoded = jwt.verify(token, SECRET_KEY);
-              (req as CustomRequest).token = decoded;
-  
-              next()
-            }
-            else {
-              res.status(401).send('Please authenticate');
-          }
-      }*/
-  
 
-    registerValidation = validate({
+    validateRegister = validate({
         body: Joi.object({
             name: Joi.string().required(),
             email: Joi.string().email().required(),
@@ -41,20 +25,20 @@ class UsersMiddleware {
     })
 
 
-    loginValidation = validate({
+    validateLogin = validate({
         body: Joi.object({
             email: Joi.string().email().required(),
             password: Joi.string().min(8).required()
         })
     })
 
-    getByIdValidation = validate({
+    validateGetById = validate({
         params: Joi.object({
             UserId: Joi.number().required(),
         })
     })
 
-    updateValidation = validate({
+    validateUpdate = validate({
         body: Joi.object({
             indexId: Joi.number().required(),
             name: Joi.string().required(),

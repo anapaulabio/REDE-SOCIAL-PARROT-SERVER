@@ -1,6 +1,7 @@
 import "dotenv/config";
 import { Secret } from "jsonwebtoken";
 
- const SECRET_KEY: Secret = String(process.env.SECRET)
+ const secret: Secret = String(process.env.SECRET)
 
- export default SECRET_KEY
+ export default secret
+ module.exports = secret

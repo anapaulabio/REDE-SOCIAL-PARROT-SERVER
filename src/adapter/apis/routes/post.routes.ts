@@ -1,8 +1,9 @@
 import { CommonRoutesConfig } from "./common.routes.config";
 import express from "express";
 import postController from "../controllers/post.controller"
-import usersMiddlewares from "../middlewares/users.middlewares";
+import postMiddleware from "../middlewares/post.middleware";
 import authMiddleware from "../middlewares/auth.middleware";
+
 
 export class PostRoutes extends CommonRoutesConfig {
     constructor(app: express.Application) {
@@ -17,15 +18,18 @@ export class PostRoutes extends CommonRoutesConfig {
         this.app.route(`/post`)
             .post( 
                // usersMiddlewares.auth,
-               // authMiddleware,
+                authMiddleware,
+                postMiddleware.validateRegister,
                 postController.createPosts 
             );
 
             this.app.route('/post/:PostId')
-            .get(postController.getPostById)
+            .get(postMiddleware.validateGetById,
+                postController.getPostById)
             .put(postController.updatePosts)
-            
 
-            return this.app;
+            this.app.use(postMiddleware.validateError);
 
-            }}
+            return this.app
+    }
+}

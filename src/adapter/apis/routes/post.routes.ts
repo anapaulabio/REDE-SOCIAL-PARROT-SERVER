@@ -28,7 +28,7 @@ export class PostRoutes extends CommonRoutesConfig {
                 postController.getPostById)
             .put(postController.updatePosts)
 
-
+            this.app.route('/users/posts/:UserId')
             this.app.use(postMiddleware.validateError);
 
             return this.app

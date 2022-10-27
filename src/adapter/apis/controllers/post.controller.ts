@@ -47,7 +47,6 @@ class PostController {
         }
     }
 
-
     async updatePosts(req: express.Request, res: express.Response) {
         try {
             let post = await updatePostUsecase.execute(req.body)

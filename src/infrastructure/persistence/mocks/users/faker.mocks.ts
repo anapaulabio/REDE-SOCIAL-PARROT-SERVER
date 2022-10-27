@@ -1,26 +1,52 @@
-import IMocksUser from "./mocks.interface";
+import IMocks from "./mocks.interface";
 import { faker } from "@faker-js/faker";
 import { IUsersEntity } from "../../../../domain/entities/users.entity";
+import { IPostsEntity } from "../../../../domain/entities/post.entity";
 
-export default class FakerMocksUser implements IMocksUser {
+export default class FakerMocks implements IMocks {
     getUsers(): IUsersEntity[] {
-        let usersMock: IUsersEntity[] = [];
-        usersMock = this._getUsersMock()
-        return (this.getUsers() as IUsersEntity[])
+        let users: IUsersEntity[] = []
+        users = this._getUsers();
+        return (users as IUsersEntity[]);
     }
 
+    getPosts(): IPostsEntity[] {
+        let posts: IPostsEntity[] = []
+        posts = this._getPosts()
+        return (posts as IPostsEntity[]);
+    }
 
-    private _getUsersMock(): IUsersEntity[] {
-        let usersMock: IUsersEntity[] = [];
+  
+    private _getUsers(): IUsersEntity[] {
+        const usersMock: IUsersEntity[] = [];
+        let nameGenerate, emailGenerate
         Array.from({ length: 10 }).forEach(()=> {
+            nameGenerate = faker.name.fullName();
+            emailGenerate = faker.helpers.unique(faker.internet.email, [nameGenerate]).toLocaleLowerCase();
+
             usersMock.push({
-                name: faker.name.fullName(),
-                email: faker.internet.email(),
-                apartment: Number(faker.address.buildingNumber()),
-                password: faker.internet.password(8, true, /[A-Z]/),
+                name: nameGenerate,
+                email: emailGenerate,
+                apartment: Number(faker.finance.amount()),
+                password: String(faker.internet.password(8, true)),
                 linkdafoto: faker.image.people()
+               
             })
         })
         return usersMock
     }
+
+   private _getPosts(): IPostsEntity[] {
+        const posts: IPostsEntity[] = [];
+        let iduser;
+        Array.from({ length: 20 }).forEach(() => {
+            iduser = Number(faker.finance.amount(1, 20, 0));
+            posts.push({
+                userid: iduser,
+                contentText: faker.lorem.words(Number(faker.finance.amount(1, 30, 0)))
+            })
+        })
+        return posts;
+    }
+
 }

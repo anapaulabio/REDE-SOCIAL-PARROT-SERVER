@@ -5,7 +5,8 @@ import createPostUsecase from '../../../domain/usecases/posts/create.post.usecas
 import listPostUsecase from '../../../domain/usecases/posts/list.post.usecase';
 import readPostUsecase from '../../../domain/usecases/posts/read.post.usecase';
 import updatePostUsecase from '../../../domain/usecases/posts/update.post.usecase';
-import ReadPostByIdUser from '../../../domain/usecases/posts/Read.post.byIdUser';
+
+//import ReadPostByIdUser from '../../../domain/usecases/posts/Read.post.byIdUser';
 
 import { getErrorMessage } from '../helpers/errors.helper.adapter';
 
@@ -54,15 +55,17 @@ class PostController {
         }
     }
 
-    async postsByIdUser(req: express.Request, res: express.Response) {
-        try {
-            const posts = await ReadPostByIdUser.execute(req.params.UserId)
 
-            res.status(200).send(posts);
-        } catch (error) {
-            return res.status(500).send(getErrorMessage(error)); 
-        }
-    }
+/*async postsByIdUser(req: express.Request, res: express.Response){
+    const posts = await ReadPostByIdUser.execute(req.params.UserId)
+    res.status(200).send(posts);
+}*/
+
+    async postByUser(req: express.Request, res: express.Response){
+        const post = await readPostByUser.execute(req.body);
+        res.status(200).send(post);
+
+} 
+
 }
-
 export default new PostController();

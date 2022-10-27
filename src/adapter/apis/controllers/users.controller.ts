@@ -1,10 +1,9 @@
 import express from 'express';
 import debug from 'debug';
 import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt'
 
 import secret from '../../../infrastructure/config/secret.config';
-import { getErrorMessage } from '../../helpers/errors.helper.adapter';
+import { getErrorMessage } from '../helpers/errors.helper.adapter';
 
 import createUserUsecase from '../../../domain/usecases/users/create.user.usecase';
 import listUserUsecase from '../../../domain/usecases/users/list.user.usecase';
@@ -18,28 +17,45 @@ const log: debug.Debugger = debug('app: users-controller')
 
 class UsersController {
     async getUsers(req: express.Request, res: express.Response) {
-        const users = await listUserUsecase.execute()
-        res.status(200).send(users)
+        try {
+            const users = await listUserUsecase.execute()
+            
+            res.status(200).send(users)
+        } catch (error) {
+            return res.status(500).send(getErrorMessage(error)); 
+        }
     }
 
     async getUsersById(req: express.Request, res: express.Response) {
-        const user = await readUserUsecase.execute({
-            UserId: Number(req.params.UserId)
-        })
-
-        res.status(200).send(user)
+        try {
+            const user = await readUserUsecase.execute({
+                UserId: Number(req.params.UserId)
+            })
+    
+            res.status(200).send(user)
+        } catch (error) {
+            return res.status(500).send(getErrorMessage(error));    
+        }
     }
 
     async createUsers(req: express.Request, res: express.Response) {
-        const user = await createUserUsecase.execute(req.body)
-        log(user)
-        res.status(201).send(user)
+        try {
+            const user = await createUserUsecase.execute(req.body)
+            log(user)
+            res.status(201).send(user)
+        } catch (error) {
+            return res.status(500).send(getErrorMessage(error));    
+        }
     }
 
     async updateUsers(req: express.Request, res: express.Response) {
-        let user = await updateUserUsecase.execute(req.body)
+        try {
+            let user = await updateUserUsecase.execute(req.body)
 
-        res.status(200).send(user)
+            res.status(200).send(user)
+        } catch (error) {
+            return res.status(500).send(getErrorMessage(error));
+        }
     }
 
     async removeUsers(req: express.Request, res: express.Response) {
@@ -57,12 +73,19 @@ class UsersController {
     async loginOne(req: express.Request, res: express.Response) {
         try {
             const user = await loginUserUsecase.execute(req.body)
+            const token = jwt.sign({
+                indexId: user.indexId,
+                name: user.name,
+                email: user.email,
+                apartment: user.apartment
+            },
+                secret)
 
-            return res.status(200).send({ data: user });
+            return res.status(200).send({ data: user, token });
         } catch (error) {
             return res.status(500).send(getErrorMessage(error));
         }
-    };
+    }
 }
 
 export default new UsersController();

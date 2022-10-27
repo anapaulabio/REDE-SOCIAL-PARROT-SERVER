@@ -8,7 +8,9 @@ import updatePostUsecase from '../../../domain/usecases/posts/update.post.usecas
 
 //import ReadPostByIdUser from '../../../domain/usecases/posts/Read.post.byIdUser';
 
+
 import { getErrorMessage } from '../helpers/errors.helper.adapter';
+import readPostByUser from '../../../domain/usecases/posts/read.post.byUser';
 
 class PostController {
     async listPosts(req: express.Request, res: express.Response) {
@@ -54,6 +56,7 @@ class PostController {
             return res.status(500).send(getErrorMessage(error)); 
         }
     }
+
 
 
 /*async postsByIdUser(req: express.Request, res: express.Response){

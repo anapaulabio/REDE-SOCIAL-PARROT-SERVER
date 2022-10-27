@@ -74,23 +74,7 @@ export class MysqlDatabase implements IDatabaseModel {
             throw new Error((err as Error).message);
         }
     }
-
-    createModel(name: string, properties: Sequelize.ModelAttributes): Sequelize.ModelCtor<Sequelize.Model<any, any>> {
-        return this._adapter.define(name, properties, {
-            timestamps: true
-        });
-    }
-
-    async selectQuery(sql: string, replacements?: Sequelize.BindOrReplacements) {
-        return await this._adapter.query(
-            sql,
-            {
-                type: Sequelize.QueryTypes.SELECT,
-                replacements: replacements
-            }
-        );
-    }
-
+    
     readByWhere(model: Sequelize.ModelCtor<Sequelize.Model<any, any>>, dataWhere: Sequelize.WhereOptions<any>): any {
         try{
             return model.findAll({
@@ -100,5 +84,11 @@ export class MysqlDatabase implements IDatabaseModel {
             throw new Error((err as Error).message);
         }
     }
-    
+
+    createModel(name: string, properties: Sequelize.ModelAttributes): Sequelize.ModelCtor<Sequelize.Model<any, any>> {
+        return this._adapter.define(name, properties, {
+            timestamps: true
+        });
+    }
+   
 }

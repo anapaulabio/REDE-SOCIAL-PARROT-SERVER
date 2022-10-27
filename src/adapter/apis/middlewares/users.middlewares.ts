@@ -1,19 +1,13 @@
 import express from 'express';
 import bcrypt from 'bcrypt';
 import { validate, Joi, ValidationError } from 'express-validation';
-import jwt, { JwtPayload } from 'jsonwebtoken';
 
-import SECRET_KEY from '../../../infrastructure/config/secret.config';
 import logger from '../../../infrastructure/logs/winston.logs';
 import loginUserUsecase from '../../../domain/usecases/users/login.user.usecase';
 import readUserUsecase from '../../../domain/usecases/users/read.user.usecase';
-import usersController from '../controllers/users.controller';
+import constantsConfig from '../../../infrastructure/config/constants.config';
 
-export interface CustomRequest extends express.Request {
-    token: string | JwtPayload;
-}
 class UsersMiddleware {
-
     validateRegister = validate({
         body: Joi.object({
             name: Joi.string().required(),
@@ -57,7 +51,7 @@ class UsersMiddleware {
             next()
         } else {
             logger.error(["email invalido"])
-            res.status(401).send("Senha ou email inválido, tente novamente")
+            res.status(401).send({ERROR: constantsConfig.USERS.MESSAGES.ERROR.INVALID_EMAIL})
         }
     }
 
@@ -70,7 +64,7 @@ class UsersMiddleware {
             next()
         } else {
             logger.error(["senha inválida"])
-            res.status(401).send("Senha ou email inválido, tente novamente")
+            res.status(401).send({ERROR: constantsConfig.USERS.MESSAGES.ERROR.INVALID_PASS})
         }
     }
 
@@ -83,10 +77,10 @@ class UsersMiddleware {
             next()
         } else {
             logger.error(["Usuario não encontrado"])
-            res.status(404).send("Usuário não encontrado")
+            res.status(404).send({ERROR: constantsConfig.USERS.MESSAGES.ERROR.USER_NOT_EXIST.replace('{USER_ID}', req.params.UserId)})
         }
     }
-
+    
     async validateError(err: any, req: express.Request, res: express.Response, next: express.NextFunction) {
         if (err instanceof ValidationError) {
             return res.status(err.statusCode).json(err)

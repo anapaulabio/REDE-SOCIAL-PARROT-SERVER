@@ -3,6 +3,7 @@ import secret from "../../../infrastructure/config/secret.config";
 import jwt  from 'jsonwebtoken'
 import { IToken } from '../helpers/token.interface.helper';
 import { Joi, validate, ValidationError } from 'express-validation';
+import constantsConfig from '../../../infrastructure/config/constants.config';
 
 class PostMiddleware {
     validateGetById = validate({
@@ -23,7 +24,7 @@ class PostMiddleware {
             const token = req.header('Authorization')?.replace('Baerer ', '')
             console.log(token)
             if (!token) {
-                console.error('deu ruim')
+                res.status(401).send({ERROR: constantsConfig.POSTS.MESSAGES.ERROR.TOKEN_REQUIRED})
               }
         
               const decoded = jwt.verify(token!, secret);
@@ -33,7 +34,7 @@ class PostMiddleware {
             next()
         
         } catch (error) {
-            res.status(401).send('Por favor, verifique a autenticação');
+            res.status(401).send({ERROR: constantsConfig.POSTS.MESSAGES.ERROR.VERIFY_AUTH});
         }
     }
    
@@ -42,7 +43,7 @@ class PostMiddleware {
             return res.status(err.statusCode).json(err)
         }
         if (err.name === "UnauthorizedError") {
-          res.status(401).send("invalid token...");
+          res.status(401).send({ERROR: constantsConfig.POSTS.MESSAGES.ERROR.INVALID_TOKEN});
         } else {
           next(err);
         }

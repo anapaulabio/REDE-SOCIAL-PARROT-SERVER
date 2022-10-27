@@ -90,5 +90,15 @@ export class MysqlDatabase implements IDatabaseModel {
             }
         );
     }
+
+    readByWhere(model: Sequelize.ModelCtor<Sequelize.Model<any, any>>, dataWhere: Sequelize.WhereOptions<any>): any {
+        try{
+            return model.findAll({
+                where: dataWhere
+            });
+        } catch(err){
+            throw new Error((err as Error).message);
+        }
+    }
     
 }

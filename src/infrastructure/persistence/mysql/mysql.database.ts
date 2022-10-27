@@ -90,5 +90,13 @@ export class MysqlDatabase implements IDatabaseModel {
             timestamps: true
         });
     }
-   
+    async selectQuery(sql: string, replacements?: Sequelize.BindOrReplacements) {
+        return await this._adapter.query(
+            sql,
+            {
+                type: Sequelize.QueryTypes.SELECT,
+                replacements: replacements
+            }
+        );
+    }   
 }

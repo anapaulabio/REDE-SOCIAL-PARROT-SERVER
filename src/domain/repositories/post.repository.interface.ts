@@ -7,5 +7,6 @@ export interface IPostsRepository{
    /* deleteById(resourceId: number): Promise<void>,*/
     list(): Promise<IPostsEntity[]>,
     updateById(resource: IPostsEntity): Promise<IPostsEntity | undefined>,
-    groupPostsByIdUser(UserId: String): Promise<any>
+    readByWhere(user: string): Promise<IPostsEntity | undefined>
+
 }

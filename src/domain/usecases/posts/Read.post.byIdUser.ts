@@ -1,4 +1,4 @@
-import { IPostsEntity } from "../../entities/post.entity";
+/*import { IPostsEntity } from "../../entities/post.entity";
 import { IUseCase } from "../interface.usecase";
 import { IPostsRepository } from "../../repositories/post.repository.interface";
 import  PostRepository  from "../../../adapter/repositories/posts.repositories";
@@ -15,4 +15,4 @@ export class ReadPostsIdUserUseCase implements IUseCase {
 
 export default new ReadPostsIdUserUseCase(
     PostRepository
-    );
+    ); */

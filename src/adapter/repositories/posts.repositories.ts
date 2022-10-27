@@ -79,6 +79,17 @@ async groupPostsByIdUser(UseriD: string): Promise<{
 
   }
 }
+async readByWhere(userid: string): Promise<IPostsEntity | undefined> {
+  try{
+      const post = await this._database.readByWhere(this._postModel, {
+        user: userid
+      });
+      
+      return modelToEntityPostMysql(post);
+  } catch(err){
+      throw new Error((err as Error).message);
+  }
+}
 
 }
 

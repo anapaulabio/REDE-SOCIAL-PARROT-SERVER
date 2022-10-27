@@ -49,7 +49,30 @@ class UsersMiddleware {
         }),
     })
 
-    
+    async validateEmail(req: express.Request, res: express.Response, next: express.NextFunction) {
+        const user = await loginUserUsecase.execute(req.body)
+
+        if (user) {
+            logger.info(["email encontrado"])
+            next()
+        } else {
+            logger.error(["email invalido"])
+            res.status(401).send("Senha ou email inválido, tente novamente")
+        }
+    }
+
+    async validatePassword(req: express.Request, res: express.Response, next: express.NextFunction) {
+        const user = await loginUserUsecase.execute(req.body)
+        let isMatch = bcrypt.compareSync(req.body.password, user.password)
+
+        if (isMatch) {
+            logger.info(["Senha compatível"])
+            next()
+        } else {
+            logger.error(["senha inválida"])
+            res.status(401).send("Senha ou email inválido, tente novamente")
+        }
+    }
 
     async valitateUserExists(req: express.Request, res: express.Response, next: express.NextFunction) {
         let user = await readUserUsecase.execute({

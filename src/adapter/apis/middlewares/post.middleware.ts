@@ -1,11 +1,8 @@
 import express from 'express';
 import secret from "../../../infrastructure/config/secret.config";
 import jwt  from 'jsonwebtoken'
-import { IToken } from '../../../infrastructure/config/token.config';
+import { IToken } from '../helpers/token.interface.helper';
 import { Joi, validate, ValidationError } from 'express-validation';
-
-
-
 
 class PostMiddleware {
     validateGetById = validate({
@@ -20,13 +17,6 @@ class PostMiddleware {
             contentText: Joi.string().required()
         })
     })
-    async validateRequiredPostBodyFields(req: express.Request, res: express.Response, next: express.NextFunction){
-        if (req.body && req.body.userid !== undefined) {
-            next();
-        } else {
-            res.status(400).send({error: `Verifique os campos obrigatórios para criar uma conta.`});
-        }
-    }
 
     authJWT(req: express.Request, res: express.Response, next: express.NextFunction) {
         try {
@@ -43,7 +33,7 @@ class PostMiddleware {
             next()
         
         } catch (error) {
-            res.status(401).send('Please authenticate');
+            res.status(401).send('Por favor, verifique a autenticação');
         }
     }
    

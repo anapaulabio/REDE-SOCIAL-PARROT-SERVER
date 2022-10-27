@@ -38,7 +38,7 @@ export class PostRoutes extends CommonRoutesConfig {
 
          
                 this.app.route(`/user/post`)
-                    .get(
+                    .post(
                         postController.postByUser
                     );
         

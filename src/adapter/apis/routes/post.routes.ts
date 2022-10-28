@@ -22,26 +22,21 @@ export class PostRoutes extends CommonRoutesConfig {
                 postController.createPosts 
             );
 
-         /*   this.app.route('/post/:PostId')
-            .all(postMiddleware.validateGetById,
-                postMiddleware.authJWT)
+            this.app.route('/post/:PostId')
+            .all(postMiddleware.authJWT)
             .get(postController.getPostById)
             .put(postController.updatePosts);
 
-            this.app.route('/users/posts/:UserId')
-                .get(
-                    postMiddleware.authJWT,
-                    postController.postsByIdUser
-                    );
+            this.app.route(`/user/post`)
+            .get(postMiddleware.authJWT,
+                postController.postByUser
+            );
 
-            this.app.use(postMiddleware.validateError);*/
+
+            this.app.use(postMiddleware.validateError);
 
          
-                this.app.route(`/user/post`)
-                    .post(
-                        postController.postByUser
-                    );
-        
+
                 return this.app;
 
            

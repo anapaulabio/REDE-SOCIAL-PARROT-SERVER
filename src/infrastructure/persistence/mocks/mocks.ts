@@ -1,7 +1,7 @@
-import { IPostsEntity } from "../../../../domain/entities/post.entity";
-import { IUsersEntity } from "../../../../domain/entities/users.entity";
-import createPostUsecase from "../../../../domain/usecases/posts/create.post.usecase";
-import createUsersUsecase from "../../../../domain/usecases/users/create.user.usecase";
+import { IPostsEntity } from "../../../domain/entities/post.entity";
+import { IUsersEntity } from "../../../domain/entities/users.entity";
+import createPostUsecase from "../../../domain/usecases/posts/create.post.usecase";
+import createUsersUsecase from "../../../domain/usecases/users/create.user.usecase";
 import FakerMocks from "./faker.mocks";
 import IMocks from "./mocks.interface";
 

@@ -40,10 +40,10 @@ class PostController {
         try {
             const posts = await createPostUsecase.execute(req.body);
             debug.log(posts)
-    
+
             res.status(201).send(posts);
         } catch (error) {
-            return res.status(500).send(getErrorMessage(error)); 
+            return res.status(500).send(getErrorMessage(error));
         }
     }
 
@@ -53,22 +53,22 @@ class PostController {
 
             res.status(200).send(post)
         } catch (error) {
-            return res.status(500).send(getErrorMessage(error)); 
+            return res.status(500).send(getErrorMessage(error));
         }
     }
 
 
 
-/*async postsByIdUser(req: express.Request, res: express.Response){
-    const posts = await ReadPostByIdUser.execute(req.params.UserId)
-    res.status(200).send(posts);
-}*/
+    /*async postsByIdUser(req: express.Request, res: express.Response){
+        const posts = await ReadPostByIdUser.execute(req.params.UserId)
+        res.status(200).send(posts);
+    }*/
 
-    async postByUser(req: express.Request, res: express.Response){
+    async postByUser(req: express.Request, res: express.Response) {
         const post = await readPostByUser.execute(req.body);
         res.status(200).send(post);
 
-} 
+    }
 
 }
 export default new PostController();

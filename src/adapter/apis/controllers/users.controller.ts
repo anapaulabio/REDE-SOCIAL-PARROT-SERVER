@@ -10,7 +10,7 @@ import listUserUsecase from '../../../domain/usecases/users/list.user.usecase';
 import updateUserUsecase from '../../../domain/usecases/users/update.user.usecase';
 import deleteUserUsecase from '../../../domain/usecases/users/delete.user.usecase';
 import readUserUsecase from '../../../domain/usecases/users/read.user.usecase';
-import loginUserUsecase from '../../../domain/usecases/users/login.user.usecase';
+import loginUserUsecase from '../../../domain/usecases/authentication/login.user.usecase';
 
 
 const log: debug.Debugger = debug('app: users-controller')

@@ -3,15 +3,10 @@ import secret from "../../../infrastructure/config/secret.config";
 import jwt  from 'jsonwebtoken'
 import { IToken } from '../helpers/token.interface.helper';
 import { Joi, validate, ValidationError } from 'express-validation';
+import logger from '../../../infrastructure/logs/winston.logs';
 import constantsConfig from '../../../infrastructure/config/constants.config';
 
 class PostMiddleware {
-    validateGetById = validate({
-        params: Joi.object({
-            PostId: Joi.number().required(),
-        })
-    })
-
     validateRegister = validate({
         body: Joi.object({
             userid: Joi.number().required(),
@@ -28,12 +23,20 @@ class PostMiddleware {
               }
         
               const decoded = jwt.verify(token!, secret);
-            (req as IToken).token = decoded;
-            
-          
-            next()
+              
+              (req as IToken).token = decoded;
+              if(typeof decoded == `string`){
+                res.status(401).send({
+                    error: `Usuario nao autenticado.`
+                });
+            } else {
+                console.log(`Id do usuário: ${decoded.indexId}`);
+                next();
+            }
+   
         
         } catch (error) {
+            logger.error("Token invalido, por favor tente novamente")
             res.status(401).send({ERROR: constantsConfig.POSTS.MESSAGES.ERROR.VERIFY_AUTH});
         }
     }

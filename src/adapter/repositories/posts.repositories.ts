@@ -1,5 +1,3 @@
-import * as Sequelize from "sequelize";
-
 import { IDatabaseModel } from "../../infrastructure/persistence/database.model.interface";
 import { IPostsEntity } from "../../domain/entities/post.entity";
 import { MysqlDatabase } from "../../infrastructure/persistence/mysql/mysql.database";
@@ -9,7 +7,7 @@ import postsModel from "../../infrastructure/persistence/mysql/models/posts.mode
 import entityToModelPost from "../../infrastructure/persistence/mysql/helpers/posts/entityToModel.post.mysql";
 import modelToEntityPostMysql from "../../infrastructure/persistence/mysql/helpers/posts/modelToEntity.post.mysql";
 import * as sequelize from "sequelize";
-/*import modelToEntityAccount from "../../infra/persistence/mysql/helpers/accounts/modelToEntity.account.mysql";*/
+
 
 export class PostsRepositories implements IPostsRepository {
 

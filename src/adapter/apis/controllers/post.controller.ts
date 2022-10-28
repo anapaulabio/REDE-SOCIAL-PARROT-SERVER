@@ -6,15 +6,12 @@ import listPostUsecase from '../../../domain/usecases/posts/list.post.usecase';
 import readPostUsecase from '../../../domain/usecases/posts/read.post.usecase';
 import updatePostUsecase from '../../../domain/usecases/posts/update.post.usecase';
 
-//import ReadPostByIdUser from '../../../domain/usecases/posts/Read.post.byIdUser';
-
-
 import { getErrorMessage } from '../helpers/errors.helper.adapter';
 import readPostByUser from '../../../domain/usecases/posts/read.post.byUser';
 
 class PostController {
     async listPosts(req: express.Request, res: express.Response) {
-        /*comm */
+       
         try {
             const posts = await listPostUsecase.execute();
             debug.log(posts)
@@ -56,13 +53,6 @@ class PostController {
             return res.status(500).send(getErrorMessage(error));
         }
     }
-
-
-
-    /*async postsByIdUser(req: express.Request, res: express.Response){
-        const posts = await ReadPostByIdUser.execute(req.params.UserId)
-        res.status(200).send(posts);
-    }*/
 
     async postByUser(req: express.Request, res: express.Response) {
         const post = await readPostByUser.execute(req.body);

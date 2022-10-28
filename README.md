@@ -9,11 +9,17 @@
 
 ## 📁 Funcionalidades da API
 
+### Users
 - Post/Login
 - Get/Listar
 - Post/Cadastrar
 - Put/Editar
 - Delete/Apagar
+
+### Posts
+- Get/Listar
+- Post/Criar novo post
+- Put/Editar
 
 ## Pré-requisitos
 Antes de começar, você vai precisar ter instalado em sua máquina as seguintes ferramentas:
@@ -23,13 +29,13 @@ Além disto é bom ter um editor para trabalhar com o código como [VSCode](http
 ## 🎲 Rodando o Back End (servidor)
 
 ```bash
-# Clone este repositório
+# Clone este repositório:
 $ git clone https://github.com/anapaulabio/REDE-SOCIAL-PARROT-SERVER
 
-# Acesse a pasta do projeto no terminal/cmd
+# Acesse a pasta do projeto no terminal/cmd:
 $ cd REDE-SOCIAL-PARROT-SERVER
 
-# Instale as dependências
+# Instale as dependências:
 $ npm install
 
 # Crie e ajuste o arquivo .env a partir do .env.example: 
@@ -48,6 +54,9 @@ $ npx sequelize db:create
 
 # Crie o migration:
 $ npx sequelize-cli db:migrate
+
+# Crie mocks para seu banco de dados:
+$ npm run mocks
 
 # Inicie a aplicação:
 $ npm run debug
@@ -88,8 +97,8 @@ As seguintes ferramentas foram usadas na construção do projeto:
 
 <h2> 👨‍💻 Contribuidores </h2><br>
 
-Ana Paula Oliveira 
-Vinicius Andrade
-Danilo Rodrigues
-Guilherme Ribeiro
-Eduardo Muniz
+- Ana Paula Oliveira 
+- Vinicius Andrade
+- Danilo Rodrigues
+- Guilherme Ribeiro
+- Eduardo Muniz

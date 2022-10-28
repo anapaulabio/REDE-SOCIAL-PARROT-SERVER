@@ -53,39 +53,15 @@ export class PostsRepositories implements IPostsRepository {
            
     return resource;
 }
-async groupPostsByIdUser(UseriD: string): Promise<{
-  UserId: string,
-  postid: Number
-  contentText: string
 
-}>{
-  
-  const postByIdUser = await this._database.selectQuery(
-    `SELECT * from posts WHERE userid = :UserId`, 
-    {
-      UseriD
-    }
 
-  )
-
-  if(postByIdUser[1].UserId) {
-    return postByIdUser[1];
-  }else{
-    return {
-      
-    postid:0,
-    UserId: UseriD,
-    contentText: ''}
-
-  }
-}
-async readByWhere(userid: string): Promise<IPostsEntity | undefined> {
+async readByWhere(userid: number): Promise<IPostsEntity | undefined> {
   try{
-      const post = await this._database.readByWhere(this._postModel, {
+      const postModel = await this._database.readByWhere(this._postModel, {
         userid: userid
       });
-      
-      return modelToEntityPostMysql(post);
+      const post = postModel.map(modelToEntityPostMysql)
+      return post
   } catch(err){
       throw new Error((err as Error).message);
   }

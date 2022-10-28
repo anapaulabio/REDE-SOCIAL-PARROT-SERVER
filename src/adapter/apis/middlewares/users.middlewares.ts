@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 import { validate, Joi, ValidationError } from 'express-validation';
 
 import logger from '../../../infrastructure/logs/winston.logs';
-import loginUserUsecase from '../../../domain/usecases/users/login.user.usecase';
+import loginUserUsecase from '../../../domain/usecases/authentication/login.user.usecase';
 import readUserUsecase from '../../../domain/usecases/users/read.user.usecase';
 import constantsConfig from '../../../infrastructure/config/constants.config';
 

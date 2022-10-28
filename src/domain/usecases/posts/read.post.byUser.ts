@@ -9,7 +9,7 @@ export class PostByUserUseCase implements IUseCase {
 
     }
 
-    async execute(data: { userid: string}) {
+    async execute(data: { userid: number}) {
         const post = await this._repository.readByWhere(data.userid);
 
     

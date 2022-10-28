@@ -19,5 +19,5 @@ test("Teste unitário de readUserUseCase", async() => {
 		"password": "$2b$10$4cYhvynIHe/GfTFIpjaDquCscIwoyezoRTOcRgFAFsGpmgr7cg2oC",
 		"linkdafoto": "linkdafoto.jpeg"
     };
-    expect(await readUserUsecase.execute({UserId: 0})).toContain(user2)
+    expect(await readUserUsecase.execute({UserId: 0})).toMatchObject(user2)
 })

@@ -1,7 +1,7 @@
 import IMocks from "./mocks.interface";
 import { faker } from "@faker-js/faker";
-import { IUsersEntity } from "../../../../domain/entities/users.entity";
-import { IPostsEntity } from "../../../../domain/entities/post.entity";
+import { IUsersEntity } from "../../../domain/entities/users.entity";
+import { IPostsEntity } from "../../../domain/entities/post.entity";
 
 export default class FakerMocks implements IMocks {
     getUsers(): IUsersEntity[] {
@@ -20,7 +20,7 @@ export default class FakerMocks implements IMocks {
     private _getUsers(): IUsersEntity[] {
         const usersMock: IUsersEntity[] = [];
         let nameGenerate, emailGenerate
-        Array.from({ length: 10 }).forEach(()=> {
+        Array.from({ length: 20 }).forEach(()=> {
             nameGenerate = faker.name.fullName();
             emailGenerate = faker.helpers.unique(faker.internet.email, [nameGenerate]).toLocaleLowerCase();
 
@@ -39,7 +39,7 @@ export default class FakerMocks implements IMocks {
    private _getPosts(): IPostsEntity[] {
         const posts: IPostsEntity[] = [];
         let iduser;
-        Array.from({ length: 20 }).forEach(() => {
+        Array.from({ length: 40 }).forEach(() => {
             iduser = Number(faker.finance.amount(1, 20, 0));
             posts.push({
                 userid: iduser,

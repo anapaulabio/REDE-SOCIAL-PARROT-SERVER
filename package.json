@@ -7,7 +7,7 @@
     "test": "jest",
     "start": "tsc && node --unhandled-rejections=strict -r dotenv/config ./dist/infrastructure/app/app.js",
     "debug": "set DEBUG=* && npm run start",
-    "mocks": "tsc && node ./dist/infrastructure/persistence/mocks/users/mocks.js"
+    "mocks": "tsc && node ./dist/infrastructure/persistence/mocks/mocks.js"
   },
   "repository": {
     "type": "git",

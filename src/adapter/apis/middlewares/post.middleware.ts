@@ -23,10 +23,17 @@ class PostMiddleware {
               }
         
               const decoded = jwt.verify(token!, secret);
+              
               (req as IToken).token = decoded;
-            
-            logger.info('Token verified: ', decoded)    
-            next()
+              if(typeof decoded == `string`){
+                res.status(401).send({
+                    error: `Usuario nao autenticado.`
+                });
+            } else {
+                console.log(`Id do usuário: ${decoded.indexId}`);
+                next();
+            }
+   
         
         } catch (error) {
             logger.error("Token invalido, por favor tente novamente")

@@ -1,4 +1,6 @@
-# REDE-SOCIAL-PARROT-SERVER
+<h1 align=center> API - PARROT </hi>
+ <br><br>
+<img src="img/3310e69c-a3ee-4be0-a92d-f0bae603b4ae.jpg" >
 
 ## 💻 Sobre o projeto
 <br>
@@ -53,9 +55,20 @@ $ npm run debug
 ```
 
  ## 📁 Documentação da API PARROT 
- 
 
- ## 🛠 Tecnologias
+```bash
+# Acesse a pasta da documentação no terminal/cmd
+$ cd docs
+
+# Acesse o index.html com o plugin Live Server
+```
+
+<br><br>
+
+<img src="img\documentação.png">
+<br><br>
+
+## 🛠 Tecnologias
 
 As seguintes ferramentas foram usadas na construção do projeto:
 <br><br>
@@ -74,3 +87,9 @@ As seguintes ferramentas foram usadas na construção do projeto:
 ---
 
 <h2> 👨‍💻 Contribuidores </h2><br>
+
+Ana Paula Oliveira 
+Vinicius Andrade
+Danilo Rodrigues
+Guilherme Ribeiro
+Eduardo Muniz

@@ -1,5 +1,5 @@
 import { IUsersEntity } from "../../entities/users.entity";
-import createUserUsecase from "./create.user.usecase";
+import createUserUsecase from "../users/create.user.usecase";
 import loginUserUsecase from "./login.user.usecase";
 
 test('Teste unitário de loginUserUsecase', async() => {
